@@ -7,18 +7,53 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/styles.css">
 </head>
-<body>
+<body onload="checkForCookies()">
 <main>
     <section>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="text-center">Want some cookies?</h1>
-
+                </div>
+                <div class="col-md-12">
+                    <p class="text-center">Click the button below to get some cookies.</p>
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">What's your name?</label>
+                            <input type="text" id="name" class="form-control" placeholder="Enter your name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="grade" class="form-label">What grade are you giving me?</label>
+                            <input type="text" id="grade" class="form-control" placeholder="Enter your grade">
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary" onclick="setCookie()">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-center">No need to refresh, just click the button to get the cookies...</h1>
+                    <!-- Click a button that triggers getCookies() -->
+                    <button type="button" class="btn btn-primary" onclick="getCookies()">Get Cookies</button>
+                </div>
+                <div class="col-md-12 cookie_results text-center py-4">
+                    Your name is <foo id="your_name"></foo> and you think I should get <foo id="your_grade"></foo>
+                    ...
+                    <br>
+                    We both know I should really be getting <foo id="my_grade"></foo>.
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="card container-fluid" style="width:32rem;">
+            <div class="card-body">
+                <img src="./img/cookies.jpg" alt="cookie" class="img-fluid">
+            </div>
+        </div>
     </section>
 </main>
 
@@ -43,9 +78,42 @@
     });
 </script>
 <script>
-function cookieFunction() {
-    document.cookie = "username=Alfred Simpson; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/";
-}
+    function setCookie() {
+        var name = document.getElementById("name").value;
+        var grade = document.getElementById("grade").value;
+        document.cookie = "name=" + name + ";";
+        document.cookie = "grade=" + grade + ";";
+        document.cookie = "What-al-really-deserves= A++++;";
+    }
+</script>
+<script>
+    function checkForCookies() {
+        // Check to see if they have a cookie set from us already. If they do, display an alert window for the document.
+        var x = document.cookie;
+        let their_name = x.split("name=")[1].split(";")[0];
+        if (x.includes("name=")) {
+            alert(`Hey, I said you didn't need to refresh, ${their_name}!`);
+        }
+    }
+</script>
+<script>
+    function getCookies() {
+        var x = document.cookie;
+        let their_name = x.split("name=")[1].split(";")[0];
+        let their_grade = x.split("grade=")[1].split(";")[0];
+        let my_grade = x.split("What-al-really-deserves=")[1].split(";")[0];
+        document.getElementById("your_name").innerHTML = their_name;
+        document.getElementById("your_grade").innerHTML  = their_grade;
+        document.getElementById("my_grade").innerHTML = my_grade
+        $(document).ready(function () {
+            $(".cookie_results").show();
+        });
+    }
+</script>
+<script>
+    function getCookie() {
+
+    }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
